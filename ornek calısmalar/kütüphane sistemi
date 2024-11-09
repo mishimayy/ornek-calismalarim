@@ -1,0 +1,82 @@
+class Kitap:
+    def __init__(self, kitap_adi, yazar_adi, yayin_yili, sayfa_sayisi):
+        self.kitap_adi = kitap_adi
+        self.yazar_adi = yazar_adi
+        self.yayin_yili = yayin_yili
+        self.sayfa_sayisi = sayfa_sayisi
+    
+    def info(self):
+        return f"Kitap adi : {self.kitap_adi} - {self.yazar_adi} \n Yayin yili : {self.yayin_yili} - {self.sayfa_sayisi} sayfa  kütüphanede mevcut. "
+
+class Kutuphane:
+    def __init__(self):
+        self.kitap_listesi = []
+    
+    def kitap_ekle(self, yeni_kitap):
+        self.kitap_listesi.append(yeni_kitap)
+        print(f"{yeni_kitap.kitap_adi} kütüphaneye eklenmistir.")
+
+    def kitap_sil(self, kitap_adi):
+        for kitap in self.kitap_listesi:
+            if kitap.kitap_adi == kitap_adi:
+                self.kitap_listesi.remove(kitap)
+                print(f"{kitap_adi} kütüphaneden silinmiştir.")
+                return
+        print("İstediğiniz kitap kütüphanede bulunamamaktadir.")
+
+    def kutuphanedeki_kitaplar(self):
+        if not self.kitap_listesi:
+            print("Kütüphanede henüz kayitli kitap bulunmamaktadir.")
+        else:
+            for kitap in self.kitap_listesi:
+                print(kitap.info())
+
+def menu():
+    kutuphane = Kutuphane()
+
+    # Mevcut kitapları kütüphaneye ekle
+    mevcut_kitaplar = [
+        Kitap("Körlük", "Jose Saramago", 1995, 368),
+        Kitap("Çirak", "Tess Gerritsen", 2002, 384),
+        Kitap("Huzursuzluk", "Livaneli", 2017, 160),
+        Kitap("Kahve Soğumadan Önce", "Toshikazu Kawaguchi", 2015, 200),
+        Kitap("First Person Singular", "Murakami", 1997, 245)
+    ]
+    
+    for kitap in mevcut_kitaplar:
+        kutuphane.kitap_ekle(kitap)
+
+    while True:
+        print("\n--- Kütüphane Menüsü ---")
+        print("1 - Kütüphanedeki kitaplar hakkinda detayli bilgi")
+        print("2 - Kitap ekle")
+        print("3 - Kitap sil")
+        print("4 - Çikiş")
+        
+        secim = input("Bir seçenek girin (1-2-3-4): ")
+
+        if secim == "1":
+            print("\nKütüphanedeki kitaplar:")
+            kutuphane.kutuphanedeki_kitaplar()
+        
+        elif secim == "2":
+            kitap_adi = input("Kitap adi: ")
+            yazar_adi = input("Yazar adi: ")
+            yayin_yili = int(input("Yayin yili: "))
+            sayfa_sayisi = int(input("Sayfa sayisi: "))
+            yeni_kitap = Kitap(kitap_adi, yazar_adi, yayin_yili, sayfa_sayisi)
+            kutuphane.kitap_ekle(yeni_kitap)
+
+        elif secim == "3":
+            kitap_adi = input("Silmek istediğiniz kitabin adi: ")
+            kutuphane.kitap_sil(kitap_adi)
+        
+        elif secim == "4":
+            print("Çikis yapiliyor")
+            break
+
+        else:
+            print("Geçersiz seçenek, lütfen tekrar deneyin.")
+
+# Menüyü başlat
+menu()
