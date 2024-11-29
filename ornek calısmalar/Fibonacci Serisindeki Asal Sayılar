@@ -1,0 +1,24 @@
+kullanicadan_sayi = int(input("Bir sayi giriniz : "))
+
+def fibonacci(n):
+    if n in {0,1}: #fibonacci başlangıç değerleri 
+        return n
+    return fibonacci(n-1) + fibonacci(n-2) #fibonacci kuralı
+
+def fibonacci_asal_sayilar(sayi):
+    if sayi > 1:
+        for i in range (2,int(sayi**0.5)+1): # sayının karakökünü almak asal sayı olduğunu gösterir
+            if (sayi % i) == 0:
+                return False # sayı tam bölünüyorsa fonksiyondan çık
+        return True
+    return False # 1 ve 0 asal sayı değil
+
+asal_fibonacci_asal_sayi = 0
+i = 1
+
+while asal_fibonacci_asal_sayi < kullanicadan_sayi:
+    x = fibonacci(i)
+    if fibonacci_asal_sayilar(x):
+        print(x)
+        asal_fibonacci_asal_sayi += 1
+    i += 1
